@@ -1,0 +1,55 @@
+<div class="workflow modal hide">
+<form  class="create-form" action="/admin/ceph/create_crush_rule"  method="POST">
+{% csrf_token %}
+<div class="modal-header">
+    <a href="#" class="close" data-dismiss="modal">&times;</a>
+    <h3>Create Rule</h3>
+</div>
+<div class="modal-body clearfix">
+<table class="table-fixed">
+  <tbody>
+    <tr>
+      <td class="actions">
+            <div class="control-group form-field clearfix required">
+                <label for="id_name">Name:</label>
+                <span class="help-block"></span>
+                <div class="input">
+                    <input id="id_name" maxlength="25" name="name" type="text" />
+                </div>
+            </div>
+            <div class="control-group form-field clearfix required">
+                <label for="id_root">Root:</label>
+                <span class="help-block"></span>
+                <div class="input">
+                    <input id="id_root" maxlength="25" name="root" type="text" />
+                </div>
+            </div>
+            <div class="control-group form-field clearfix required">
+                <label for="id_type">Type:</label>
+                <span class="help-block"></span>
+                <div class="input">
+                    <input id="id_type" maxlength="25" name="type" type="text" />
+                </div>
+            </div>
+            <div class="control-group form-field clearfix required">
+                <label for="id_choose_mode">Choose mode:</label>
+                <span class="help-block"></span>
+                <div class="input">
+                    <input id="id_choose_mode" name="choose_mode" type="radio" value="firstn" checked/> firstn
+                    <input id="id_choose_mode" name="choose_mode" type="radio" value="indep"/> indep
+                </div>
+            </div>
+        </td>
+        <td class="help_text">
+              <p></p><p>From here you can create a new simple crush rule to organize object distribution.</p>
+        </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="modal-footer">
+    <input class="btn btn-primary pull-right" type="submit" value="Create Rule"/>
+    <a class="btn secondary cancel close">Cancel</a>
+</div>
+</form>
+</div>

@@ -1,0 +1,143 @@
+<head>
+{% load i18n %}
+
+<link href="http://nvd3.org/assets/css/nv.d3.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="http://nvd3.org/assets/js/nv.d3.js"></script>
+<script>
+$(document).ready(function () {
+$.noConflict(); 
+function overview_chart(){
+    ctypes = jQuery("form.chart-series input:checkbox");
+    req = [];
+    for(i=0;i<ctypes.length;i++)
+        if(ctypes[i].checked)
+            req.push(ctypes[i].value);
+    url = "json?m=overview&name=data&stats=" + req.join(',')
+    d3.json(url, function(error, poolData) {
+        nv.addGraph(function() {
+          var chart = nv.models.lineWithFocusChart();
+
+          chart.xAxis
+            .tickFormat(function(d){return d3.time.format('%H:%M')(new Date(d * 1000));});
+
+          chart.x2Axis
+            .tickFormat(function(d){return d3.time.format('%H:%M')(new Date(d * 1000));});
+
+          chart.yAxis
+            .tickFormat(d3.format(',.2f'));
+
+          chart.y2Axis
+            .tickFormat(d3.format(',.2f'));
+
+          d3.select('#my-chart svg')
+            .datum(poolData)
+            .transition().duration(500)
+            .call(chart)
+            ;
+
+          nv.utils.windowResize(chart.update);
+
+          return chart;
+        });
+    });
+}
+
+jQuery(overview_chart());
+jQuery('.chart-series').submit(function(event){
+    event.preventDefault();
+    overview_chart()
+});
+});
+</script>
+
+
+
+
+</head>
+<body>
+
+<h3>{% trans "Ceph Overview" %}</h3>
+<div class="info detail">
+    <h4>{% trans "Basic Info" %}</h4>
+    <hr class="header_rule">
+    <dl>
+        <dt>{% trans "fsid" %}</dt>
+        <dd>{{ status.fsid }}</dd>
+        <dt>{% trans "Health" %}</dt>
+        {% if status.health.overall_status != "HEALTH_OK" %}
+        <dd><span class="icon-warning-sign"></span>{{ status.health.summary.0.severity}}</dd>
+        <dd>{{status.health.summary.0.summary}}</dd>
+        {% else %}
+        <dd><span class="icon-ok-sign"></span>HEALTH OK</dd>
+        {% endif %}
+        <dt>{% trans "Bytes Available" %}</dt>
+        <dd>{{ status.pgmap.bytes_avail|filesizeformat }}</dd>
+        <dt>{% trans "Bytes Used" %}</dt>
+        <dd>{{ status.pgmap.bytes_used|filesizeformat }}</dd>
+        <dt>{% trans "Bytes Total" %}</dt>
+        <dd>{{ status.pgmap.bytes_total|filesizeformat }}</dd>
+    </dl>
+</div>
+
+<div class="mon detail">
+    <h4>{% trans "Mon Info" %}</h4>
+    <hr class="header_rule">
+    <dl>
+        <dt>{% trans "mons" %}</dt>
+{% for mon in status.monmap.mons %}
+        <dd>name: {{ mon.name }}; rank: {{ mon.rank }}; addr: {{ mon.addr }}</dd>
+{% endfor %}
+    </dl>
+</div>
+
+<div class="osd detail">
+    <h4>{% trans "OSD Info" %}</h4>
+    <hr class="header_rule">
+        <span>{{ status.osdmap.osdmap.num_osds }} OSDs:</span>
+        <span>{{ status.osdmap.osdmap.num_up_osds }} up,</span>
+        <span>{{ status.osdmap.osdmap.num_in_osds }} in</span>
+    </dl>
+</div>
+
+<div class="mds detail">
+    <h4>{% trans "MDS Info" %}</h4>
+    <hr class="header_rule">
+    <dl>
+        <dt>{% trans "MDSs" %}</dt>
+{% for mds in status.mdsmap.by_rank %}
+        <dd>name: {{mds.name }}; rank: {{mds.rank}}; status: {{ mds.status }};</dd>
+{% endfor %}
+    </dl>
+</div>
+
+<style>
+#my-chart svg {
+    float:left;
+  height: 400px;
+}
+.chart-series li
+{
+    float:left;
+    margin-right:5px;
+}
+</style>
+
+<div>
+<form class="chart-series">
+<ul>
+    <li><input type="checkbox" name="chart_name" value="rd" checked/> Read Times</li>
+    <li><input type="checkbox" name="chart_name" value="wr" checked/> Write Times</li>
+    <li><input type="checkbox" name="chart_name" value="rd_kb" /> Read Bytes</li>
+    <li><input type="checkbox" name="chart_name" value="wr_kb" /> Write Bytes</li>
+    <li><input type="checkbox" name="chart_name" value="kb_used" /> Space Used</li>
+    <li><input type="checkbox" name="chart_name" value="objects" /> Objects</li>
+    <li><input type="submit" class="btn chart-submit" value="update" style="margin-bottom:9px"/></li>
+</ul>
+</form>
+</div>
+
+<div id="my-chart">
+  <svg></svg>
+</div></body>

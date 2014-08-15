@@ -1,0 +1,72 @@
+<head>
+{% load i18n %}
+
+<link href="http://nvd3.org/assets/css/nv.d3.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="http://nvd3.org/assets/js/nv.d3.js"></script>
+<script>
+$(document).ready(function () {
+$("#query-form").submit(function(event){
+    event.preventDefault();
+    $(".chart-submit").val('Loading...');
+    $(".chart-submit").addClass('disabled');
+    var url="json?m=query&" + $(this).serialize();
+    distJSON = d3.json(url, function(error, distData) {
+        nv.addGraph(function() {
+            var chart = nv.models.discreteBarChart()
+              .staggerLabels(true)
+              .tooltips(true)
+              .showValues(false)
+              .showXAxis(false)
+              .color(['#1f77b4'])
+
+            d3.select('#pg-chart svg')
+              .datum(distData['pg'])
+              .transition().duration(500)
+              .call(chart)
+              ;
+
+            nv.utils.windowResize(chart.update);
+
+            return chart;
+        });
+        nv.addGraph(function() {
+          var chart = nv.models.pieChart()
+              .showLabels(true);
+
+            d3.select("#osd-chart svg")
+              .datum(distData['osd'][0]['values'])
+              .transition().duration(1200)
+              .call(chart);
+            
+ 			nv.utils.windowResize(chart.update);
+
+          return chart;
+        });
+        $(".chart-submit").val('Search');
+        $(".chart-submit").removeClass('disabled');
+    });
+});
+});
+
+
+</script>
+</head>
+<body>
+
+<form id="query-form">
+<!-- TODO: list pools in cluster -->
+<select name="pool" id="rbd_type">
+    <option value="data">data</option>
+</select>
+<input type="text" name="id" placeholder="Object ID" id="object"/>
+<input type="submit" value="Search" class="btn chart-submit" style="margin-bottom:9px"/>
+</form>
+<style>
+#pg-chart svg { height:400px}
+#osd-chart svg { height:400px}
+</style>
+<div id="pg-chart"><svg></svg></div>
+<div id="osd-chart"><svg></svg></div>
+<body>
