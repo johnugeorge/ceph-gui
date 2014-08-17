@@ -271,8 +271,20 @@ if ( !window.isLoaded ) {
 {% endblock %}
 
 
-{% block section-right-content %}
-<div class="section-right-content">
+{% block section-left %}
+<div class="section-left">
+<ul class="nav-sidebar">
+  <li><a id="osd" class="link" href="">OSD</a>
+  <li><a id="mon" class="link" href="">Monitors</a>
+  <li><a id="mds" class="link" href="">MDS</a>
+  <li><a id="pool" class="link" href="">Pools</a>
+</ul>
+</div>
+{% endblock %}
+
+
+{% block section-right %}
+<div class="section-right">
 <div class="info detail">
     <dl>
         <dt style="font-size: 1.5rem;"> Cluster FSID: {{ status.fsid }}</dt>

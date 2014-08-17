@@ -16,24 +16,16 @@
 <div class="header">
 <img class="nav-topbar img-src" src="/static/images/ceph.jpg">
 <ul class="nav-topbar" style="padding-top:90px;">
-  <li><a class="link" href="">Dashboard</a>
-  <li><a class="link" href="">Topology</a>
+  <li><a class="link" href="overview">Dashboard</a>
+  <li><a class="link" href="topology">Topology</a>
   <li><a class="link" href="">Nodes</a>
   <li><a class="link" href="">Manage Cluster</a>
 </ul>
 </div>
 
-<div class="section-left">
-<ul class="nav-sidebar">
-  <li><a id="osd" class="link" href="">OSD</a>
-  <li><a id="mon" class="link" href="">Monitors</a>
-  <li><a id="mds" class="link" href="">MDS</a>
-  <li><a id="pool" class="link" href="">Pools</a>
-</ul>
 </div>
-<div class="section-right">
-{% block section-right-content %}{% endblock %}
-</div>
+{% block section-left %}{% endblock %}
+{% block section-right %}{% endblock %}
 <div class="footer">
 {% block footer %}{% endblock %}
 </div>

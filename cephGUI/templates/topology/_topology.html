@@ -1,10 +1,7 @@
-<head>
+{% extends "index.html" %}
 {% load i18n %}
+{% block js %}
 
-<link href="http://nvd3.org/assets/css/nv.d3.css" rel="stylesheet">
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script src="http://nvd3.org/assets/js/nv.d3.js"></script>
 <script>
 
 var hostOSD={};
@@ -462,8 +459,10 @@ $(document).ready(function(){
 });
 </script>
 
+{% endblock %}
 
-</head><body>
+
+{% block section-right %}
 <style type="text/css">
 .node {
     cursor: pointer;
@@ -492,4 +491,5 @@ $(document).ready(function(){
     </dd>
 </div>
 <div id="tree-container"></div>
-</body>
+
+{% endblock %}
