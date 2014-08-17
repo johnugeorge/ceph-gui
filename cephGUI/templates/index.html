@@ -1,16 +1,49 @@
 {% load i18n %}
-{% block title %}{% trans "Ceph" %}{% endblock %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+     {% block title %}<title>{% trans "Ceph Dashboard" %}</title>{% endblock %}
+     <link rel="stylesheet" type="text/css" href="/static/css/cephgui.css">
+     <link href="/static/css/nv.d3.css" rel="stylesheet">
+     <link href='http://fonts.googleapis.com/css?family=Rambla' rel='stylesheet' type='text/css'>
+     {% block css %}{% endblock %}
+    </head>
 
 
-{% block main %}
-<div class="row-fluid">
-  <div class="span12">
-  {{ tab_group.render }}
-  </div>
+<body>
+<div class="header">
+<img class="nav-topbar img-src" src="/static/images/ceph.jpg">
+<ul class="nav-topbar" style="padding-top:90px;">
+  <li><a class="link" href="">Dashboard</a>
+  <li><a class="link" href="">Topology</a>
+  <li><a class="link" href="">Nodes</a>
+  <li><a class="link" href="">Manage Cluster</a>
+</ul>
 </div>
-{% endblock %}
+
+<div class="section-left">
+<ul class="nav-sidebar">
+  <li><a id="osd" class="link" href="">OSD</a>
+  <li><a id="mon" class="link" href="">Monitors</a>
+  <li><a id="mds" class="link" href="">MDS</a>
+  <li><a id="pool" class="link" href="">Pools</a>
+</ul>
+</div>
+<div class="section-right">
+{% block section-right-content %}{% endblock %}
+</div>
+<div class="footer">
+{% block footer %}{% endblock %}
+</div>
+
+<script src="/static/js/jquery-1.11.0.min.js"></script>
+<script src="/static/js/d3.v3.min.js" charset="utf-8"></script>
+<script src="/static/js/nv.d3.js"></script>
 
 {% block js %}
-  <script src="http://nvd3.org/assets/js/nv.d3.js"></script>
-  <script src="{{ STATIC_URL }}js/cephorizon.js"></script>
 {% endblock %}
+</body>
+
+</html>

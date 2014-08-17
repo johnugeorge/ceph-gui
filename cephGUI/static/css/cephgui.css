@@ -1,0 +1,110 @@
+*{
+   border: 1px solid red !important;
+}
+
+body {
+    /*background-color: #e9e8e3;*/
+    
+}
+
+
+#power-gauge g.arc {
+	fill: steelblue;
+}
+
+#power-gauge g.pointer {
+	fill: #e85116;
+	stroke: #b64011;
+}
+
+#power-gauge g.label text {
+	text-anchor: middle;
+	font-size: 14px;
+	font-weight: bold;
+	fill: #666;
+}
+
+.header,
+.section-left,
+.section-right,
+.footer {
+  margin: 0 1.5% 24px 1.5%;
+}
+
+.header{
+   height:150px;
+}
+
+.section-left {
+  float:left;
+  width: 20%;
+}
+
+.section-right {
+  float: right;
+  width: 70%;
+  font-family: 'Rambla', sans-serif;
+}
+
+.footer {
+  clear: both;
+  margin-bottom: 0;
+}
+
+
+
+
+a{
+    text-decoration: none;
+}
+
+.img-src{
+    width:150px;
+    height:150px;
+    float:left;
+}
+
+
+.link {
+	border:0px;
+    padding:10px;
+    width:60px;
+	color:#828383;
+    font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 2.0rem;
+    /*border:2px solid #eb3552;
+    border-radius: 20px ;*/
+}
+
+.link:hover {
+	background-color:#828383;
+	color:#272727;
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+
+ul.nav-sidebar .link:hover {
+	background-color:transparent;
+	color:#272727;
+    font-weight: bold;
+    font-size: 2.5rem;
+    border:2px solid #eb3552;
+    border-radius: 20px ;
+}
+.nav-topbar li
+{
+display: inline;
+list-style-type: none;
+padding-right: 30px;
+position:relative;
+left:150px;
+}
+
+.nav-sidebar li
+{
+list-style-type: none;
+padding-top:13px;
+padding-bottom:13px;
+}
