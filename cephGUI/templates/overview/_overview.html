@@ -45,7 +45,7 @@ function overview_chart(){
           chart.y2Axis
             .tickFormat(d3.format(',.2f'));
 
-          d3.select('#my-chart svg')
+          d3.select('.my-chart svg')
             .datum(poolData)
             .transition().duration(500)
             .call(chart)
@@ -278,19 +278,26 @@ if ( !window.isLoaded ) {
     <dl>
         <dt style="font-size: 1.5rem;"> Cluster FSID: {{ status.fsid }}</dt>
         <dd></dd>
+        <br>
         {% if status.health.overall_status != "HEALTH_OK" %}
-        <span style="font-family: wingdings; font-size: 400%; background-color:#4DB00B; float:left; width:100px; height:100px;  border-radius: 20px;">&#x26a0;</span>
-        <dd>{{status.health.summary.0.summary}}</dd>
+        <span style="font-family: wingdings; font-size: 400%; float:left; width:100px; height:100px; border-radius: 20px; left:70px; top:10px; position:relative">&#x26a0;</span>
+        <div class="health_status" style="background-color:#FBB917;  height:100px ;  border-radius: 20px;">
+           <dd style="position:relative; top:30px; left:50px; font-size: 2.0rem;"> Cluster Status : HEALTH WARN</dt>
+        </div>
+		<dd>{{status.health.summary.0.summary}}</dd>
         {% else %}
         <span style="font-family: wingdings; font-size: 400%; float:left; width:100px; height:100px; border-radius: 20px; left:70px; top:10px; position:relative">&#10003;</span>
-        <div class="health_status" style="background-color:#36A008;  height:100px ;  border-radius: 20px;">
+        <div class="health_status" style="background-color:#4CC417;  height:100px ;  border-radius: 20px;">
            <dd style="position:relative; top:30px; left:50px; font-size: 2.0rem;"> Cluster Status : HEALTH OK</dt>
+        </div>
         {% endif %}
     </dl>
 </div>
+<br>
 <div class="cluster-overview" style="height:300px;">
-<div id="power-gauge" style="width:40%; float:left; border:2px solid #828383; border-radius: 20px; padding-left:20px;"></div>
-<div class="usage" style="width:20%; float:left; border:2px solid #828383; border-radius: 20px; margin-left:20px; margin-right:20px; padding-left:20px;">
+<div id="power-gauge" style="width:40%; float:left; border:2px solid #828383; border-radius: 20px; padding-left:20px; height:250px">
+</div>
+<div class="usage" style="width:20%; float:left; border:2px solid #828383; border-radius: 20px; margin-left:20px; margin-right:20px; padding-left:20px; height:250px">
         <dt style="font-size: 1.5rem;">{% trans "Usage" %}</dt>
         <dt></dt>
         <dt>{% trans "Bytes Available" %}</dt>
@@ -325,9 +332,8 @@ if ( !window.isLoaded ) {
 </div>
 </div>
 
-</div>
 <style>
-#my-chart svg {
+.my-chart svg {
     float:left;
   height: 400px;
 }
@@ -354,7 +360,7 @@ if ( !window.isLoaded ) {
 </form>
 </div>
 
-<div id="my-chart">
+<div class="my-chart">
   <svg></svg>
 </div>
 </div>
