@@ -1,6 +1,6 @@
-*{
+/**{
    border: 1px solid red !important;
-}
+}*/
 
 body {
     /*background-color: #e9e8e3;*/
@@ -108,3 +108,17 @@ list-style-type: none;
 padding-top:13px;
 padding-bottom:13px;
 }
+
+.btn {
+	display: inline-block;
+	color: #666;
+	background-color: #eee;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 12px;
+	padding: 0px 20px;
+	border-radius: 5px;
+	border: 1px solid rgba(0,0,0,0.3);
+	border-bottom-width: 3px;
+}
+

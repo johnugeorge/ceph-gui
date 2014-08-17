@@ -291,7 +291,7 @@ if ( !window.isLoaded ) {
 <div class="cluster-overview" style="height:300px;">
 <div id="power-gauge" style="width:40%; float:left; border:2px solid #828383; border-radius: 20px; padding-left:20px;"></div>
 <div class="usage" style="width:20%; float:left; border:2px solid #828383; border-radius: 20px; margin-left:20px; margin-right:20px; padding-left:20px;">
-        <dt style="font-size: 1.5rem;">{% trans "Cluster Usage" %}</dt>
+        <dt style="font-size: 1.5rem;">{% trans "Usage" %}</dt>
         <dt></dt>
         <dt>{% trans "Bytes Available" %}</dt>
         <dd>{{ status.pgmap.bytes_avail|filesizeformat }}</dd>
@@ -301,37 +301,30 @@ if ( !window.isLoaded ) {
         <dd>{{ status.pgmap.bytes_total|filesizeformat }}</dd>
 
 </div>
-<div class="mon_info" style="width:30%; float:left;">hi</div>
+<div class="cluster-stats" style="width:25%; float:left; border:2px solid #828383; border-radius: 20px; padding-left:20px;">
+<dt style="font-size: 1.5rem;">{% trans "Cluster" %}</dt>
+<dt>{% trans "OSD" %}</dt>
+        <dd>Total: {{ status.osdmap.osdmap.num_osds }} osds</dd>
+        <dd> {{ status.osdmap.osdmap.num_up_osds }} up, {{ status.osdmap.osdmap.num_in_osds }} in</dd>
+<dt>{% trans "MON" %}</dt>
+	   <dd>Total: {{ status.monmap.mons|length}} mon </dd>
+       {% for val in status.quorum %}
+        {% if val == 0 %}
+         <dd>Not in quorum</dd>
+	    {% else %}
+		 <dd>In Quorum</dd>
+        {% endif %}
+       {% endfor %}
+<dt>{% trans "MDS" %}</dt>
+	   <dd>Total:{{ status.mdsmap.by_rank|length}} mds </dd>
+<dt>{% trans "PG" %}</dt>
+	   <dd>Total: {{ status.pgmap.num_pgs}} pgs </dd>
+       {% for pgs in status.pgmap.pgs_by_state %}
+        <dd>{{pgs.count }} pgs {{pgs.state_name}}</dd>
+       {% endfor %}
 </div>
-<div class="mon_detail" style="clear:both;">
-    <h4>{% trans "Mon Info" %}</h4>
-    <hr class="header_rule">
-    <dl>
-        <dt>{% trans "mons" %}</dt>
-{% for mon in status.monmap.mons %}
-        <dd>name: {{ mon.name }}; rank: {{ mon.rank }}; addr: {{ mon.addr }}</dd>
-{% endfor %}
-    </dl>
 </div>
 
-<div class="osd_detail">
-    <h4>{% trans "OSD Info" %}</h4>
-    <hr class="header_rule">
-        <span>{{ status.osdmap.osdmap.num_osds }} OSDs:</span>
-        <span>{{ status.osdmap.osdmap.num_up_osds }} up,</span>
-        <span>{{ status.osdmap.osdmap.num_in_osds }} in</span>
-    </dl>
-</div>
-
-<div class="mds_detail">
-    <h4>{% trans "MDS Info" %}</h4>
-    <hr class="header_rule">
-    <dl>
-        <dt>{% trans "MDSs" %}</dt>
-{% for mds in status.mdsmap.by_rank %}
-        <dd>name: {{mds.name }}; rank: {{mds.rank}}; status: {{ mds.status }};</dd>
-{% endfor %}
-    </dl>
 </div>
 <style>
 #my-chart svg {
@@ -342,6 +335,7 @@ if ( !window.isLoaded ) {
 {
     float:left;
     margin-right:5px;
+    list-style-type: none;
 }
 
 </style>
