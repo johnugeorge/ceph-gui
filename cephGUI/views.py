@@ -36,7 +36,6 @@ def view_rules():
 def jsonResponse(request):
     m = request.GET['m']
     client = CephClient()
-    result=[]
     if m == 'tree':
         context = dict()
         context['data'] = client.osd_tree()
@@ -44,17 +43,6 @@ def jsonResponse(request):
             data = context['data'][0]
     elif m == 'overview':
         data = client.pool_df(name=request.GET['name'], stats=request.GET['stats'])
-	#pdb.set_trace()
-	for item in data:	
-	     elem={}
-	     elem['values']=[]
-	     elem['key']=item['key']
-	     res_item={}	
-	     for res in item['values']:
-		res_item['y']=res['y']
-		res_item['x']=res['x']
-		elem['values'].append(res_item)	
-             result.append(elem);
 		        
     elif m == 'query':
         #pdb.set_trace()
@@ -66,6 +54,8 @@ def jsonResponse(request):
             data['pg'][0]['values'].append({'x': pgid, 'y': value})
         for osdid,value in dist['osd'].items():
             data['osd'][0]['values'].append({'x': 'osd.'+osdid, 'y': value})
+	
+
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 

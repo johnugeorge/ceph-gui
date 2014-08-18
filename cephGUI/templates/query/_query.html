@@ -1,10 +1,7 @@
-<head>
+{% extends "index.html" %}
 {% load i18n %}
 
-<link href="http://nvd3.org/assets/css/nv.d3.css" rel="stylesheet">
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script src="http://nvd3.org/assets/js/nv.d3.js"></script>
+{% block js %}
 <script>
 $(document).ready(function () {
 $("#query-form").submit(function(event){
@@ -52,9 +49,8 @@ $("#query-form").submit(function(event){
 
 
 </script>
-</head>
-<body>
-
+{% endblock %}
+{% block section-right %}
 <form id="query-form">
 <!-- TODO: list pools in cluster -->
 <select name="pool" id="rbd_type">
@@ -70,3 +66,4 @@ $("#query-form").submit(function(event){
 <div id="pg-chart"><svg></svg></div>
 <div id="osd-chart"><svg></svg></div>
 <body>
+{% endblock %}
