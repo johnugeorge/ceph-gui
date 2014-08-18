@@ -7,19 +7,19 @@ $.noConflict();
 jQuery("#osd").click(function(event){
  event.preventDefault();
  //jQuery(".section-right-content").replaceWith(jQuery(".osd_detail"));
- jQuery(".section-right-content").html(jQuery(".osd_detail").html());
+ jQuery(".section-right").html("<div class='osd detail'><h4>{% trans 'OSD Info' %}</h4><span>{{ status.osdmap.osdmap.num_osds }} OSDs:</span><span>{{ status.osdmap.osdmap.num_up_osds }} up,</span><span>{{ status.osdmap.osdmap.num_in_osds }} in</span></dl></div>");
 });
 
 jQuery("#mon").click(function(event){
  event.preventDefault();
  //jQuery(".section-right-content").replaceWith(jQuery(".mon_detail"));
- jQuery(".section-right-content").html(jQuery(".mon_detail").html());
+ jQuery(".section-right").html("<h4>{% trans 'Mon Info' %}</h4><dl><dt>{% trans 'mons' %}</dt>{% for mon in status.monmap.mons %}<dd>name: {{ mon.name }}; rank: {{ mon.rank }}; addr: {{ mon.addr }}</dd>{% endfor %}</dl>");
 });
 
  jQuery("#mds").click(function(event){
  event.preventDefault();
  //jQuery(".section-right-content").replaceWith(jQuery(".mds_detail"));
- jQuery(".section-right-content").html(jQuery(".mds_detail").html());
+ jQuery(".section-right").html("<div class='mds detail'><h4>{% trans 'MDS Info' %}</h4><dl><dt>{% trans 'MDSs' %}</dt>{% for mds in status.mdsmap.by_rank %}<dd>name: {{mds.name }}; rank: {{mds.rank}}; status: {{ mds.status }};</dd>{% endfor %}");
 });
 
 function overview_chart(){
@@ -291,13 +291,13 @@ if ( !window.isLoaded ) {
         <dd></dd>
         <br>
         {% if status.health.overall_status != "HEALTH_OK" %}
-        <span style="font-family: wingdings; font-size: 400%; float:left; width:100px; height:100px; border-radius: 20px; left:70px; top:10px; position:relative">&#x26a0;</span>
+        <span style="font-family: wingdings; font-size: 400%; float:left; width:100px; height:100px; border-radius: 20px; left:70px; top:10px; position:relative; line-height:50px;">&#x26a0;</span>
         <div class="health_status" style="background-color:#FBB917;  height:100px ;  border-radius: 20px;">
            <dd style="position:relative; top:30px; left:50px; font-size: 2.0rem;"> Cluster Status : HEALTH WARN</dt>
         </div>
 		<dd>{{status.health.summary.0.summary}}</dd>
         {% else %}
-        <span style="font-family: wingdings; font-size: 400%; float:left; width:100px; height:100px; border-radius: 20px; left:70px; top:10px; position:relative">&#10003;</span>
+        <span style="font-family: wingdings; font-size: 400%; float:left; width:100px; height:100px; border-radius: 20px; left:70px; top:10px; position:relative; line-height:65px;">&#10003;</span>
         <div class="health_status" style="background-color:#4CC417;  height:100px ;  border-radius: 20px;">
            <dd style="position:relative; top:30px; left:50px; font-size: 2.0rem;"> Cluster Status : HEALTH OK</dt>
         </div>

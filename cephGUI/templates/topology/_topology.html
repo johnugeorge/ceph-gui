@@ -18,9 +18,9 @@ treeJSON = d3.json("json?m=tree", function(error, treeData) {
     var root;
 
     // size of the diagram
-    var viewerWidth = 1130;
+    var viewerWidth = 1000;
     //var viewerHeight = $('.tab-content').height();
-    var viewerHeight = 500;
+    var viewerHeight = 400;
 
     var tree = d3.layout.tree()
         .size([viewerHeight, viewerWidth]);
@@ -267,7 +267,7 @@ nodeEnter.append("text")
 
         // Change the circle fill depending on whether it has children and is collapsed
         node.select("circle.nodeCircle")
-            .attr("r", 4.5)
+            .attr("r", 10)
             .style("fill", function(d) {
                 return d._children ? "lightsteelblue" : "#fff";
             })
@@ -469,19 +469,19 @@ $(document).ready(function(){
 }
 
 .node text {
-    font-size:10px; 
+    font-size:13px; 
     font-family:sans-serif;
 }
 
 .link {
     fill: none;
     stroke: #ccc;
-    stroke-width: 1.5px;
+    stroke-width: 3.5px;
 }
 
 
 </style>
-
+<div class="form-val" style="padding-left:30px" >
 <h3>{% trans "Cluster Topology" %}</h3>
 <div class="pull-right" style="float:left">
     <dt><input type="checkbox" name="watch" id="check-watch"/> Watch </dt>
@@ -490,6 +490,8 @@ $(document).ready(function(){
      every <select id="watch-intv" style="height:30px;width:50px;margin:0"><option value=10000>10</option><option value=5000>5</option><option value="1000">1</option></select> s
     </dd>
 </div>
+</div>
+<br>
 <div id="tree-container"></div>
 
 {% endblock %}
