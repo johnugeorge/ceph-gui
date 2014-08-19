@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from cephGUI.views import indexView,jsonResponse,createRule,overview,topology,query
+from cephGUI.views import indexView,jsonResponse,createRule,overview,topology,query,login,logOut
 from django.contrib import admin
 from django.conf import settings
 admin.autodiscover()
@@ -11,6 +11,8 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', overview, name='index'),
+    url(r'^login$', login, name='login'),
+    url(r'^logout$', logOut, name='logout'),
     url(r'^overview$', overview, name='overview'),
     url(r'^topology$', topology, name='topology'),
     url(r'^query$', query, name='query'),

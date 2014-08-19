@@ -31,6 +31,8 @@ TEMPLATE_DIRS = (
   	os.path.join(SETTINGS_PATH, 'templates'),
  )
 
+LOGIN_URL='login'
+
 STATIC_ROOT = 'static/'
 
 STATIC_URL = '/static/'

@@ -131,10 +131,11 @@ function click(d) {
 
             current_osd = d.cid
             var url = "http://"+d.address+":5000/api/v0.1/osd/host?id="+d.cid;
+            var url = "json?m=tree";
             $('#osd'+d.cid).popover('show');
             $.ajax(url).done(function(x){
                 $("#osdpopovertitle").html(d.name)
-                var content = JSON.parse(x);
+                var content = {'output':{'cpu_percent':10,'disk':{'total':5000,'used':500},'memory':{'total':5000,'used':500},'numpg':100,'numpg_primary':43,'primary-affinity':32}};
                 content = content['output']
 
                 $("#osdpopoverright").html("CPU: <span class='label label-"+ getClassForPercentage(content['cpu_percent']) + "'>" + content['cpu_percent'] + "</span>")
