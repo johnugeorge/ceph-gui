@@ -57,6 +57,11 @@ def osdTree(request):
     return render(request, template_name, {'status': context['status']})
 
 @login_required
+def view_rules(request):
+	client = CephClient()
+	
+
+@login_required
 def createRule(request):
     post_template_name = 'crush_rule/create.html'
     get_template_name = 'crush_rule/create.html'
@@ -68,10 +73,11 @@ def createRule(request):
 		return render(request, get_template_name)
 
 @login_required
-def view_rules():
-    template_name = "crush_rule/view_rules.html"
-    client = CephClient()
-    return client.crush_rules()
+def view_rules(request):
+	template_name = "crush_rule/view_rules.html"
+	client = CephClient()
+	rules = client.crush_rules()
+	return render(request, template_name, {'rules': rules})
 
 @login_required
 def jsonResponse(request):

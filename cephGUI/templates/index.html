@@ -7,7 +7,7 @@
      {% block title %}<title>{% trans "Ceph Dashboard" %}</title>{% endblock %}
      <link rel="stylesheet" type="text/css" href="/static/css/cephgui.css">
      <link href="/static/css/nv.d3.css" rel="stylesheet">
-     <link href="/static/css/bootstrap.css" rel="stylesheet">
+	 <link href="/static/css/bootstrap.css" rel="stylesheet">
      <link href='http://fonts.googleapis.com/css?family=Rambla' rel='stylesheet' type='text/css'>
      {% block css %}{% endblock %}
     </head>
@@ -20,8 +20,8 @@
   <li><a class="link" href="overview">Dashboard</a>
   <li><a class="link" href="topology">Topology</a>
   <li><a class="link" href="query">Stats</a>
-  <li><a class="link" href="">Manage Cluster</a>
-  <li><a class="link" href="logout">logout</a>
+  <li><a class="link" href="viewRules">Crush Rules</a>
+  <li><a class="link" href="logout">Logout</a>
 </ul>
 </div>
 
@@ -36,7 +36,6 @@
 <script src="/static/js/d3.v3.min.js" charset="utf-8"></script>
 <script src="/static/js/nv.d3.js"></script>
 <script src="/static/js/bootstrap.js"></script>
-
 {% block js %}
 {% endblock %}
 </body>
