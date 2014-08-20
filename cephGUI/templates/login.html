@@ -17,7 +17,7 @@ html, body {
     position: fixed;
     width: 340px;
     height: 470px;
-    top: 50%;
+    top: 30%;
     left: 50%;
     margin-top: -140px;
     margin-left: -170px;
@@ -130,13 +130,12 @@ input[type=submit]:active {
     background-image: linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
 }
 </style>
-
 </head>
 
 <body>
     <!-- Begin Page Content -->
     <div id="container">
-	    <img class="img-src" src="/static/images/cisco-logo.jpg">
+	    <img class="img-src" src="/static/images/cisco-logo.jpg" style="padding-left:20px">
         <form action="login" method="POST">
 			{% csrf_token %}
             <font class="msg" style="padding-left:20px">  {{ msg }}</font>
@@ -150,6 +149,9 @@ input[type=submit]:active {
             </div><!--/ lower-->
         </form>
     </div><!--/ container-->
+
+
     <!-- End Page Content -->
+
 </body>
 </html>
