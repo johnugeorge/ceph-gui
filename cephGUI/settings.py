@@ -89,4 +89,5 @@ USE_L10N = True
 
 USE_TZ = True
 
+MON_URL = '172.29.86.27'
 

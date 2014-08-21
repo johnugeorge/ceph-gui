@@ -26,6 +26,7 @@ class CephClient():
             return {}
 
     def send_command(self, method, cmd, params=None):
+        #ceph_url = settings.MON_URL
         ceph_url = "172.29.86.27"
         if not ceph_url.startswith("http://"):
             ceph_url = "http://" + ceph_url
@@ -83,6 +84,11 @@ class CephClient():
                                             'type' : type,
                                             'mode' : mode})
         return result 
+
+    def delete_crush_rule(self, name):
+        result = self.send_command('PUT', ['osd', 'crush', 'rule', 'rm'],
+                                    params={'name' : name})
+        return result
 
     def pool_df(self, name, stats):
         return self.send_command('GET', ['osd', 'pool', 'df'], 

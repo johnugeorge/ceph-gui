@@ -63,14 +63,18 @@ def view_rules(request):
 
 @login_required
 def createRule(request):
-    post_template_name = 'crush_rule/create.html'
-    get_template_name = 'crush_rule/create.html'
-    if request.method == 'POST':
-		client = CephClient()
-		client.create_crush_rule(name=request.POST['name'],root=request.POST['root'],type=request.POST['type'],mode=request.POST['choose_mode'])
-		return render(request, post_template_name)
-    else:
-		return render(request, get_template_name)
+	success_page = 'viewRules'
+	client = CephClient()
+	client.create_crush_rule(name=request.POST['name'],root=request.POST['root'],type=request.POST['type'],mode=request.POST['choose_mode'])
+	return HttpResponseRedirect(success_page)
+
+@csrf_exempt
+@login_required
+def deleteRule(request):
+	success_page = 'viewRules'
+	client = CephClient()
+	client.delete_crush_rule(name=request.POST['name'])
+	return True
 
 @login_required
 def view_rules(request):

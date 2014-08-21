@@ -1,5 +1,41 @@
 {% extends "index.html" %}
 {% load i18n %}
+{% block js %}
+<script>
+$(document).ready(function(){
+ 	$("#delete").addClass("disabled");
+    $('table.view_rules tbody tr').click(function(){
+        //alert($(this).html());
+		$(this).toggleClass("selected-row")
+
+	    var count = $('.selected-row').length
+	    if (count > 0)
+			{
+ 			  $("#delete").removeClass("disabled");
+			}
+		else
+			{
+ 			  $("#delete").addClass("disabled");
+			}
+			
+	
+    });
+    
+	$('#delete').click(function(){
+		$('.selected-row').each(function (index) {
+
+		var res = $.post("deleteCrushRule",{name:$(this).find(".ruleName").text()})
+				.done(function( data ) {
+				});
+		});	
+		window.location.href ="viewRules";
+	});
+
+});
+
+</script>
+{% endblock %}
+
 {% block section-right %}
 <style>
 
@@ -15,7 +51,7 @@ em {
     font-style: italic;
 }
 
-table {
+.view_rules {
     background: #f5f5f5;
     border-collapse: separate;
     font-size: 18px;
@@ -63,8 +99,20 @@ tbody:hover tr:hover td {
     text-shadow: 0 1px 0 #fff;
 }
 
+table.view_rules tbody tr:hover td {
+    background-color: orange;
+    cursor: pointer;
+}
+
+.selected-row {
+    background: orange;
+}
+
 </style>
-<table>
+<center>
+<button class="btn btn-primary" id="create" data-toggle="modal" data-target=".workflow">Add Crush Rule</button>
+<button class="btn btn-primary" id="delete" data-toggle="modal">Delete Crush Rule</button></center>
+<table class="view_rules">
   <thead>
     <tr>
       <th>Rule Id</th>
@@ -76,14 +124,14 @@ tbody:hover tr:hover td {
   <tbody>
   {% for rule in rules %}
   <tr>
-  <td>{{ rule.rule_id }}</td>
-  <td>{{ rule.rule_name }}</td>
-  <td>Replicated
+  <td class="ruleId">{{ rule.rule_id }}</td>
+  <td class="ruleName">{{ rule.rule_name }}</td>
+  <td class-"ruleType">Replicated
   <ul>
    <li> Min Size : {{rule.min_size}}</li>
    <li> Max Size: {{rule.max_size}}</li>
   </ul>
-  <td>
+  <td class="ruleSteps">
   <ul>
   {% for step in rule.steps %}
   <li>{{step}}</li>
@@ -94,4 +142,61 @@ tbody:hover tr:hover td {
   {% endfor %}
   </tbody>
 </table>
+
+<div class="workflow modal hide">
+<form  class="create-form" action="createCrushRule"  method="POST">
+{% csrf_token %}
+<div class="modal-header">
+    <a href="#" class="close" data-dismiss="modal">&times;</a>
+    <h3>Create Rule</h3>
+</div>
+<div class="modal-body clearfix">
+<table class="table-fixed">
+  <tbody>
+    <tr>
+      <td class="actions">
+            <div class="control-group form-field clearfix required">
+                <label for="id_name">Name:</label>
+                <span class="help-block"></span>
+                <div class="input">
+                    <input id="id_name" maxlength="25" name="name" type="text" />
+                </div>
+            </div>
+            <div class="control-group form-field clearfix required">
+                <label for="id_root">Root:</label>
+                <span class="help-block"></span>
+                <div class="input">
+                    <input id="id_root" maxlength="25" name="root" type="text" />
+                </div>
+            </div>
+            <div class="control-group form-field clearfix required">
+                <label for="id_type">Type:</label>
+                <span class="help-block"></span>
+                <div class="input">
+                    <input id="id_type" maxlength="25" name="type" type="text" />
+                </div>
+            </div>
+            <div class="control-group form-field clearfix required">
+                <label for="id_choose_mode">Choose mode:</label>
+                <span class="help-block"></span>
+                <div class="input">
+                    <input id="id_choose_mode" name="choose_mode" type="radio" value="firstn" checked/> firstn
+                    <input id="id_choose_mode" name="choose_mode" type="radio" value="indep"/> indep
+                </div>
+            </div>
+        </td>
+        <td class="help_text">
+              <p></p><p>From here you can create a new simple crush rule to organize object distribution.</p>
+        </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="modal-footer">
+    <input class="btn btn-primary pull-right" type="submit" value="Create Rule"/>
+    <a class="btn secondary cancel close">Cancel</a>
+</div>
+</form>
+</div>
+
 {% endblock %}
